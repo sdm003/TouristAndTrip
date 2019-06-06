@@ -1,8 +1,10 @@
 package com.example.TouristTrip.controller;
 
 import com.example.TouristTrip.entity.Orders;
+import com.example.TouristTrip.entity.Trip;
 import com.example.TouristTrip.model.Message;
 import com.example.TouristTrip.services.OrderService;
+import com.example.TouristTrip.services.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,8 @@ import java.util.List;
 public class OrderController {
 @Autowired
 OrderService orderService;
+@Autowired
+    TripService tripService;
 
     @GetMapping
     @RequestMapping("/getAll")
@@ -37,5 +41,13 @@ OrderService orderService;
     public Message deleteTrip(@PathVariable Long id){
         return orderService.deleteOrder(id);
     }
+
+    @GetMapping
+    @RequestMapping("/trips/{id}")
+    public List<Trip> getTripsByCities(@PathVariable Long id){
+return tripService.getTripByCities(id);
+    }
+
+
 
 }

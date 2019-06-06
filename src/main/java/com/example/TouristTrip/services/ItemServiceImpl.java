@@ -2,6 +2,7 @@ package com.example.TouristTrip.services;
 import com.example.TouristTrip.entity.Item;
 import com.example.TouristTrip.entity.Users;
 import com.example.TouristTrip.model.Message;
+import com.example.TouristTrip.repository.AgreementRepository;
 import com.example.TouristTrip.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.save(item);
         return new Message("Item successfully added",item);
     }
+
+
 
     @Override
     public Item findById(Long id) {

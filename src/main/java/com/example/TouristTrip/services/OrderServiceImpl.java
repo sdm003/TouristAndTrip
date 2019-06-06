@@ -1,8 +1,8 @@
 package com.example.TouristTrip.services;
 
-import com.example.TouristTrip.entity.Orders;
-import com.example.TouristTrip.entity.Users;
+import com.example.TouristTrip.entity.*;
 import com.example.TouristTrip.model.Message;
+import com.example.TouristTrip.repository.AgreementRepository;
 import com.example.TouristTrip.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,47 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    ItemService itemService;
+    @Autowired
+    AgreementRepository agreementRepository;
+    @Autowired
+    TripService tripService;
 
     @Override
     public Message addOrder(Orders orders, Principal principal) {
     Users users =userService.getUserByLogin(principal.getName());
     orders.setSender(users);
+    Item item=orders.getItem();
+    itemService.addItem(item);
     orderRepository.save(orders);
     return new Message("Trip has been created", orders);
+    }
+
+
+    @Override
+    public Message makeAgreement(Long orderId,Long tripId) {
+        Orders order=orderRepository.findById(orderId).get();
+        Agreement agreement= new Agreement();
+        agreement.setOrders(order);
+        agreement.setStatusOrder("ready");
+        Trip trip= tripService.getTripById(tripId);
+        agreement.setTrip(trip);
+        agreement.setStatusDelivery("waiting");
+        agreementRepository.save(agreement);
+        return new Message("Agreement successfully send",agreement);
+    }
+
+    @Override
+    public Message acceptAgreement(Long agreementId) {
+        Agreement agreement= agreementRepository.findById(agreementId).get();
+        agreement.setStatusOrder("ready");
+        return new Message("Agreement has been updated",agreement);
+    }
+
+    @Override
+    public Orders getOrderBYId(Long id) {
+        return orderRepository.findById(id).get();
     }
 
     @Override
