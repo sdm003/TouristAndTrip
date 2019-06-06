@@ -8,7 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Entity
 public class Users {
@@ -32,12 +32,6 @@ private Long isActive;
          if(this.email.equals(((Users)obj).email)) return true;
          return false;
     }
-
-    //User u1 = new User("qweqwe", "qwewqe");
-    //User u2 = new User("qweqwe", "qwqwewewqe");
-    //u1.equals(u2);
-    //List list = userService.findAll();
-    //if(list.contains(u2) return Error
 
     @Column(name="image")
 private String image;

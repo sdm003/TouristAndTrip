@@ -28,13 +28,10 @@ public class TestController {
     public Message registration(@RequestBody Users users){
         return userService.addUser(users);
     }
-    //$2a$10$poKAn7ZIvLkr3TRLTHA/BOIrPfUi9mGp2U20f7sHfatePHwS6hfSK
-    //$2a$10$poKAn7ZIvLkr3TRLTHA/BOIrPfUi9mGp2U20f7sHfatePHwS6hfSK
     @PutMapping
     @RequestMapping("/update_user")
     public Message updateUsers(@RequestBody UserRequest userRequest, Principal principal){
-       return userService.updateUser(principal,userRequest);
-    }
+        return userService.updateUser(principal,userRequest);}
     @GetMapping
     @RequestMapping("/all")
     public List<Users> getAllUsers(){
@@ -42,7 +39,7 @@ public class TestController {
     }
     @GetMapping
     @RequestMapping("{id}")
-    public Users getUserById(@RequestParam Long id){
+    public Users getUserById(@PathVariable Long id){
        return userService.findUserById(id);
     }
     @GetMapping("/test")

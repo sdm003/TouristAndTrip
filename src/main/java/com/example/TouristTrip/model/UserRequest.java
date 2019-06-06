@@ -15,7 +15,7 @@ public class UserRequest {
     @JsonFormat(pattern = "dd/MM/yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
-private LocalDate dateOfBirth;
+    private LocalDate dateOfBirth;
 
     public UserRequest(String fio, String email, String image, LocalDate dateOfBirth) {
         this.fio = fio;
