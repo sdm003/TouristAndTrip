@@ -5,6 +5,7 @@ import com.example.TouristTrip.model.Message;
 import com.example.TouristTrip.repository.AgreementRepository;
 import com.example.TouristTrip.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -44,6 +45,14 @@ public class OrderServiceImpl implements OrderService {
         agreement.setStatusDelivery("waiting");
         agreementRepository.save(agreement);
         return new Message("Agreement successfully send",agreement);
+    }
+
+    @Override
+    public List<Agreement> getAgreementsBySender(Principal principal) {
+        principal.getName();
+
+       return agreementRepository.getAgreementsBySender(principal.getName());
+
     }
 
     @Override

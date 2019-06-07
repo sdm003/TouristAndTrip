@@ -63,6 +63,13 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
+    public List<Agreement> getAgreementsByDelivery(Principal principal) {
+       String login= principal.getName();
+       agreementRepository.getAgreementsByDelivery(login);
+    return null;
+    }
+
+    @Override
     public List<Trip> getTripByCities(Long id) {
         Trip trip= tripRepository.findById(id).get();
         return tripRepository.getItemsByCities(trip.getStartPoint(),trip.getEndPoint());

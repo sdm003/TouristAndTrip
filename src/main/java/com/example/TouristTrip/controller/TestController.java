@@ -28,6 +28,7 @@ public class TestController {
     public Message registration(@RequestBody Users users){
         return userService.addUser(users);
     }
+
     @PutMapping
     @RequestMapping("/update_user")
     public Message updateUsers(@RequestBody UserRequest userRequest, Principal principal){
@@ -37,15 +38,18 @@ public class TestController {
     public List<Users> getAllUsers(){
        return userService.findAllUsers();
     }
+
     @GetMapping
     @RequestMapping("{id}")
     public Users getUserById(@PathVariable Long id){
        return userService.findUserById(id);
     }
+
     @GetMapping("/test")
     public String test(Principal principal){
         return "Ave,"+principal.getName();
     }
+
     @PutMapping
     @RequestMapping("/update_image")
     public Message addImage(MultipartFile file,Principal principal)throws IOException{

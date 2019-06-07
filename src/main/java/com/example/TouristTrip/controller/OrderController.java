@@ -27,9 +27,20 @@ OrderService orderService;
 
     @PostMapping
     @RequestMapping("/create")
-    public Message create( @RequestBody Orders orders,Principal principal){
+    public Message create(@RequestBody Orders orders,Principal principal){
         return orderService.addOrder(orders,principal);
     }
+    @PostMapping
+    @RequestMapping("/agreement/make")
+    public Message makeAgreementToOrder(@RequestBody Long orderId,@RequestBody Long tripId){
+        return orderService.makeAgreement(orderId,tripId);
+    }
+    @PutMapping
+    @RequestMapping("/agreement/accept")
+    public Message acceptAgreement(@RequestBody Long agreementId){
+        return orderService.acceptAgreement(agreementId);
+    }
+
     @GetMapping
     @RequestMapping("{id}")
     public List<Orders> getAllByCities(@PathVariable Long id){
@@ -42,12 +53,11 @@ OrderService orderService;
         return orderService.deleteOrder(id);
     }
 
+
     @GetMapping
     @RequestMapping("/trips/{id}")
     public List<Trip> getTripsByCities(@PathVariable Long id){
 return tripService.getTripByCities(id);
     }
-
-
 
 }
