@@ -10,6 +10,7 @@ import com.example.TouristTrip.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Order;
 import java.security.Principal;
 import java.util.List;
 @Service
@@ -71,8 +72,8 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public List<Trip> getTripByCities(Long id) {
-        Trip trip= tripRepository.findById(id).get();
-        return tripRepository.getItemsByCities(trip.getStartPoint(),trip.getEndPoint());
+        Orders order= orderService.getOrderBYId(id);
+        return tripRepository.getItemsByCities(order.getStartPoint(),order.getEndPoint());
     }
 
     @Override

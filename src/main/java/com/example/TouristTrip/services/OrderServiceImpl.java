@@ -75,8 +75,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Orders> getOrdersByCities(Long id) {
-    Orders orders =orderRepository.findById(id).get();
-    return orderRepository.getOrderssByCities(orders.getStartPoint(), orders.getEndPoint());
+    Trip trip=tripService.getTripById(id);
+    return orderRepository.getOrderssByCities(trip.getStartPoint(), trip.getEndPoint());
     }
 
     @Override

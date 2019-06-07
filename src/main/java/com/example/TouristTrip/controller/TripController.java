@@ -26,12 +26,12 @@ OrderService orderService;
 
    @PostMapping
    @RequestMapping("/agreement/make")
-   public Message makeAgreementToOrder(@RequestBody Long orderId,@RequestBody Long tripId){
+   public Message makeAgreementToOrder(@RequestHeader Long orderId,@RequestBody Long tripId){
      return tripService.makeAgreement(orderId,tripId);
    }
    @PutMapping
    @RequestMapping("/agreement/accept")
-   public Message acceptAgreement(@RequestBody Long agreementId){
+   public Message acceptAgreement(@RequestHeader Long agreementId){
       return tripService.acceptAgreement(agreementId);
    }
 
