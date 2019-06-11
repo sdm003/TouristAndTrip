@@ -9,7 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
 
 public class UserRequest {
-    private String fio;
+    private String password;
     private String email;
     private String image;
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -17,22 +17,21 @@ public class UserRequest {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfBirth;
 
-    public UserRequest(String fio, String email, String image, LocalDate dateOfBirth) {
-        this.fio = fio;
+    public UserRequest(String email,String password) {
+        this.password=password;
         this.email = email;
-        this.image = image;
-        this.dateOfBirth = dateOfBirth;
+
     }
 
     public UserRequest() {
     }
 
     public String getFio() {
-        return fio;
+        return password;
     }
 
     public void setFio(String fio) {
-        this.fio = fio;
+        this.password = fio;
     }
 
     public String getEmail() {

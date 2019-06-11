@@ -1,5 +1,4 @@
 package com.example.TouristTrip.services;
-
 import com.example.TouristTrip.entity.Agreement;
 import com.example.TouristTrip.entity.Orders;
 import com.example.TouristTrip.entity.Trip;
@@ -9,7 +8,6 @@ import com.example.TouristTrip.repository.AgreementRepository;
 import com.example.TouristTrip.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.criteria.Order;
 import java.security.Principal;
 import java.util.List;

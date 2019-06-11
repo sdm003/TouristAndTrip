@@ -20,7 +20,10 @@ public interface UserService  {
     List<Users> findAllUsers();
     Message updateUser(Principal principal, UserRequest userRequest);
     Users getUserByLogin(String login);
+    Users getUserByPassword(String password);
     String addImage(MultipartFile file) throws IOException;
     Message updateImage(MultipartFile file,Principal principal) throws IOException;
+    String authorization(String login, String password);
+
 
 }

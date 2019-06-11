@@ -85,7 +85,25 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public Users getUserByPassword(String password) {
+        return userRepository.getUserByPassword(password);
+    }
 
+    @Override
+    public String authorization(String login, String password) {
+       Users emailUs=userRepository.getUserByLogin(login);
+       Users passwordUs=userRepository.getUserByPassword(encoder.encode(password));
+        if(emailUs!=null && passwordUs!=null){
+            if(emailUs.getEmail().equals(passwordUs.getEmail())){
+
+                String key="Basic "+encoder.encode(passwordUs.getPassword());
+                return key;
+            }
+            System.out.println("Неправильный пароль");
+            return  "nepravilnyi parol";
+        }return  "nepravilnyi login";
+    }
 
     @Override
     public Users getUserByLogin(String login) {

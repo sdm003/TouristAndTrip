@@ -23,7 +23,8 @@ public class SecureConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws  Exception{
         http.csrf().disable().httpBasic().and().authorizeRequests().antMatchers("/api/registration").permitAll()
                 .and().authorizeRequests().antMatchers("/api/all").permitAll().antMatchers("/trip/getAll").permitAll()
-                .antMatchers("/orders/getAll").permitAll().and().authorizeRequests()
+                .antMatchers("/orders/getAll").permitAll().and().authorizeRequests().antMatchers("/api/all").permitAll().and()
+                .authorizeRequests()
                 .anyRequest().authenticated().and().logout().and().formLogin();}
 
     @Autowired

@@ -15,10 +15,13 @@ import java.security.Principal;
 import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService {
+
     @Autowired
     ItemRepository itemRepository;
+
     @Autowired
     ItemService itemService;
+
     @Autowired
     UserService userService;
 
