@@ -4,19 +4,11 @@ import com.example.TouristTrip.entity.Users;
 import com.example.TouristTrip.model.Message;
 import com.example.TouristTrip.model.UserRequest;
 import com.example.TouristTrip.services.UserServiceImpl;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.Access;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 
