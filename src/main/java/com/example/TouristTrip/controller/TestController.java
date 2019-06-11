@@ -46,7 +46,8 @@ public class TestController {
     public Users getUserById(@PathVariable Long id){
        return userService.findUserById(id);
     }
-    @CrossOrigin
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/test")
     public String test(Principal principal){
         return "Ave,"+principal.getName();
