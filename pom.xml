@@ -18,7 +18,6 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	<bean id="corsFilter" class="my.package.CorsFilter" />
 	<dependencies>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
