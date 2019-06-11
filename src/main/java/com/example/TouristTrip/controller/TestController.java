@@ -4,12 +4,15 @@ import com.example.TouristTrip.entity.Users;
 import com.example.TouristTrip.model.Message;
 import com.example.TouristTrip.model.UserRequest;
 import com.example.TouristTrip.services.UserServiceImpl;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Access;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +25,13 @@ import java.util.List;
 public class TestController {
     @Autowired
     UserServiceImpl userService;
-@CrossOrigin
+
+    @ModelAttribute
+    public void setResponseHeader(HttpServletResponse response) {
+        response.setHeader("abc", "no-cache");
+    }
+
+    @CrossOrigin
     @PostMapping
     @RequestMapping("/registration")
     public Message registration(@RequestBody Users users){
@@ -47,17 +56,22 @@ public class TestController {
        return userService.findUserById(id);
     }
 
+
+
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/test")
     public String test(Principal principal){
-        return "Ave,"+principal.getName();
+
+    return principal.getName();
     }
+
     @CrossOrigin
     @PutMapping
     @RequestMapping("/update_image")
     public Message addImage(MultipartFile file,Principal principal)throws IOException{
         return userService.updateImage(file,principal);
     }
+
     @CrossOrigin
     @PostMapping
     @RequestMapping("/authorization")
