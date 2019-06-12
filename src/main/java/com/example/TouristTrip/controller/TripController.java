@@ -39,6 +39,7 @@ OrderService orderService;
    @PostMapping
    @RequestMapping("/create")
    public Message create(Principal principal, @RequestBody Trip trip){
+      System.out.println(trip.getDateOfDisactivate());
       return tripService.addTrip(trip,principal);
    }
    @CrossOrigin
