@@ -23,7 +23,7 @@ public class Trip {
     @JoinColumn(name="sender")
     private Users delivery;
 
-    @Column(name = "dateOfDisactivate", nullable = false)
+    @Column(name = "dateOfDisactivate", nullable = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
