@@ -51,9 +51,8 @@ public class TestController {
 
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/test")
+    @RequestMapping("/test")
     public String test(Principal principal){
-
     return principal.getName();
     }
 

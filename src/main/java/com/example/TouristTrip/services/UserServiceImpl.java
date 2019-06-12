@@ -5,6 +5,8 @@ import com.example.TouristTrip.model.Message;
 import com.example.TouristTrip.model.UserRequest;
 import com.example.TouristTrip.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -26,16 +30,18 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder encoder;
 
     @Override
-    public Message addUser(Users users){
+    public Message addUser(Users users) {
         List<Users> all = userService.findAllUsers();
         if (all.contains(users)) {
-            return new Message("this login have already exist",users.getEmail());
+            return new Message("this login have already exist", users.getEmail());
         } else {
-                users.setPassword(encoder.encode(users.getPassword()));
-                users = userRepository.save(users);
-                return new Message("You have successfully registered", users.getId());
-            }
+            String password = encoder.encode(users.getPassword());
+            users.setPassword(password);
+
+            users = userRepository.save(users);
+            return new Message("You have successfully registered", users.getPassword());
         }
+    }
 
 
     @Override
@@ -48,12 +54,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Message updateImage(MultipartFile file,Principal principal) throws IOException {
-    Users users=userService.getUserByLogin(principal.getName());
+    public Message updateImage(MultipartFile file, Principal principal) throws IOException {
+        Users users = userService.getUserByLogin(principal.getName());
 
-    users.setImage(userService.addImage(file));
-    userRepository.save(users);
-       return new Message("Image has been successfully updated",users.getImage());
+        users.setImage(userService.addImage(file));
+        userRepository.save(users);
+        return new Message("Image has been successfully updated", users.getImage());
     }
 
     @Override
@@ -81,7 +87,7 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.save(users);
-        return new Message("User have been updated",null);
+        return new Message("User have been updated", null);
     }
 
 
@@ -91,24 +97,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String authorization(String login, String password) {
-       Users emailUs=userRepository.getUserByLogin(login);
-       Users passwordUs=userRepository.getUserByPassword(encoder.encode(password));
-        if(emailUs!=null){
-            if(passwordUs!=null){}
-            if(emailUs.getEmail().equals(passwordUs.getEmail())){
-
-                String key="Basic "+encoder.encode(passwordUs.getPassword());
-                return key;
-            }
-            System.out.println("Неправильный пароль");
-            return  "nepravilnyi parol";
-        }return  "nepravilnyi login";
+    public Users getUserByLogin(String login) {
+        return userRepository.getUserByLogin(login);
     }
 
     @Override
-    public Users getUserByLogin(String login) {
-        return userRepository.getUserByLogin(login);
+    public String authorization(String login, String password) {
+        Users userLogin = userRepository.getUserByLogin(login);
+        String passwordEncode = encoder.encode(password);
+        encoder.matches(password, userLogin.getPassword());
+        if (userLogin == null) {
+            return "no login";
+        } else if (encoder.matches(password, userLogin.getPassword())) {
+            String originalInput = userLogin.getEmail() + ":" + password;
+            String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
+            return "Basic "+encodedString;
+        } else {
+            return passwordEncode;
+        }
+
 
     }
 }
