@@ -76,8 +76,8 @@ public class UserServiceImpl implements UserService {
     public Message updateUser(Principal principal, UserRequest userRequest) {
         String login = principal.getName();
         Users users = userService.getUserByLogin(login);
-        if (userRequest.getEmail() != null) {
-            users.setEmail(userRequest.getEmail());
+        if (userRequest.getLogin() != null) {
+            users.setEmail(userRequest.getLogin());
         }
         if (userRequest.getDateOfBirth() != null) {
             users.setDateOfBirth(userRequest.getDateOfBirth());

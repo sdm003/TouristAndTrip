@@ -10,36 +10,46 @@ import java.time.LocalDate;
 
 public class UserRequest {
     private String password;
-    private String email;
+    private String Fio;
+
+    public String getFio() {
+        return Fio;
+    }
+
+    public UserRequest() {
+    }
+
+    public void setFio(String fio) {
+        Fio = fio;
+    }
+
+    private String login;
     private String image;
     @JsonFormat(pattern = "dd/MM/yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfBirth;
 
-    public UserRequest(String email,String password) {
+    public UserRequest(String login,String password) {
+        this.login=login;
         this.password=password;
-        this.email = email;
 
     }
 
-    public UserRequest() {
-    }
-
-    public String getFio() {
+    public String getPassword() {
         return password;
     }
 
-    public void setFio(String fio) {
-        this.password = fio;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getImage() {
@@ -58,3 +68,5 @@ public class UserRequest {
         this.dateOfBirth = dateOfBirth;
     }
 }
+
+

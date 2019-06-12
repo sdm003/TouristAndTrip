@@ -66,8 +66,8 @@ public class TestController {
     @CrossOrigin
     @PostMapping
     @RequestMapping("/authorization")
-    public String authorization(@RequestHeader String login,@RequestHeader String password){
-        return userService.authorization(login,password);
+    public String authorization(@RequestBody UserRequest userRequest){
+        return userService.authorization(userRequest.getLogin(),userRequest.getPassword());
     }
 
 
