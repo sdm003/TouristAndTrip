@@ -1,4 +1,4 @@
-package com.example.TouristTrip.Enumeration;
+package com.example.TouristTrip.enumeration;
 
 public enum Transport {
     Plane,

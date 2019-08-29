@@ -1,14 +1,6 @@
 package com.example.TouristTrip.entity;
 
-import com.example.TouristTrip.Enumeration.Transport;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "item")

@@ -12,54 +12,54 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("orders")
+@RequestMapping("api/orders")
 public class OrderController {
-@Autowired
-OrderService orderService;
-@Autowired
+    @Autowired
+    OrderService orderService;
+    @Autowired
     TripService tripService;
-    @CrossOrigin
+
     @GetMapping
     @RequestMapping("/getAll")
-    public List<Orders> getAll(){
+    public List<Orders> getAll() {
         return orderService.getAllOrders();
     }
-    @CrossOrigin
+
     @PostMapping
     @RequestMapping("/create")
-    public Message create(@RequestBody Orders orders,Principal principal){
-        return orderService.addOrder(orders,principal);
+    public Message create(@RequestBody Orders orders, Principal principal) {
+        return orderService.addOrder(orders, principal);
     }
-    @CrossOrigin
+
     @PostMapping
     @RequestMapping("/agreement/make")
-    public Message makeAgreementToOrder(@RequestHeader Long orderId,@RequestHeader Long tripId){
-        return orderService.makeAgreement(orderId,tripId);
+    public Message makeAgreementToOrder(@RequestHeader Long orderId, @RequestHeader Long tripId) {
+        return orderService.makeAgreement(orderId, tripId);
     }
-    @CrossOrigin
+
     @PutMapping
     @RequestMapping("/agreement/accept")
-    public Message acceptAgreement(@RequestHeader Long agreementId){
+    public Message acceptAgreement(@RequestHeader Long agreementId) {
         return orderService.acceptAgreement(agreementId);
     }
-    @CrossOrigin
+
     @GetMapping
     @RequestMapping("{id}")
-    public List<Orders> getAllByCities(@PathVariable Long id){
+    public List<Orders> getAllByCities(@PathVariable Long id) {
         return orderService.getOrdersByCities(id);
     }
-    @CrossOrigin
+
     @DeleteMapping
     @RequestMapping("/delete/{id}")
-    public Message deleteTrip(@PathVariable Long id){
+    public Message deleteTrip(@PathVariable Long id) {
         return orderService.deleteOrder(id);
     }
 
-    @CrossOrigin
+
     @GetMapping
     @RequestMapping("/trips/{id}")
-    public List<Trip> getTripsByCities(@PathVariable Long id){
-return tripService.getTripByCities(id);
+    public List<Trip> getTripsByCities(@PathVariable Long id) {
+        return tripService.getTripByCities(id);
     }
 
 }
