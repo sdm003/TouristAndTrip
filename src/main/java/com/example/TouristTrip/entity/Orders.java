@@ -1,4 +1,5 @@
 package com.example.TouristTrip.entity;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -17,34 +18,33 @@ public class Orders {
     private String startPoint;
     private String endPoint;
     @ManyToOne
-    @JoinColumn(name="sender")
+    @JoinColumn(name = "sender")
     private Users sender;
     @Column(name = "date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate date;
     @ManyToOne
-    @JoinColumn(name="item")
+    @JoinColumn(name = "item")
     private Item item;
     private String desription;
     private String status;
     private LocalDate dateOfCreation;
 
-    public Orders(String startPoint, String endPoint, LocalDate dateOfDisactivate, Item item, String desription)
-    {
+    public Orders(String startPoint, String endPoint, LocalDate dateOfDisactivate, Item item, String desription) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.date = dateOfDisactivate;
         this.item = item;
         this.desription = desription;
-        this.dateOfCreation=LocalDate.now();
+        this.dateOfCreation = LocalDate.now();
 
     }
 
     public Orders() {
-        this.dateOfCreation=LocalDate.now();
-        this.status="Pending";
+        this.dateOfCreation = LocalDate.now();
+        this.status = "Pending";
 
     }
 

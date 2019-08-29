@@ -1,5 +1,7 @@
 package com.example.TouristTrip.entity;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -12,29 +14,30 @@ import java.time.LocalDate;
 
 @Entity
 public class Users {
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-private Long id;
-@Column(name = "fio", nullable = false)
-private String fio;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name = "fio", nullable = false)
+    private String fio;
 
-@Column(name = "login", nullable = false, unique = true)
-private String email;
+    @Column(name = "login", nullable = false, unique = true)
+    private String email;
 
-@Column(name = "password", nullable = false)
-private String password;
+    @Column(name = "password", nullable = false)
+    @JsonIgnore
+    private String password;
 
-@Column(name = "is_enabled",columnDefinition = "int4 default 1")
-private Long isActive;
+    @Column(name = "is_enabled", columnDefinition = "int4 default 1")
+    private Long isActive;
 
     @Override
     public boolean equals(Object obj) {
-         if(this.email.equals(((Users)obj).email)) return true;
-         return false;
+        if (this.email.equals(((Users) obj).email)) return true;
+        return false;
     }
 
-    @Column(name="image")
-private String image;
+    @Column(name = "image")
+    private String image;
 
     public String getImage() {
         return image;
@@ -46,28 +49,27 @@ private String image;
 
     private Long ratingDelivery;
 
-private Long ratingSender;
+    private Long ratingSender;
 
-private LocalDate dateOFRegister;
-@Column(name = "dateOfBirth", nullable = false)
-@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
-@JsonDeserialize(using = LocalDateDeserializer.class)
-@JsonSerialize(using = LocalDateSerializer.class)
-private LocalDate  dateOfBirth;
+    private LocalDate dateOFRegister;
+    @Column(name = "dateOfBirth", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate dateOfBirth;
 
     public Users() {
-        this.isActive=1L;
+        this.isActive = 1L;
     }
 
     public Users(String fio, String email, String password, LocalDate dateOfBirth) {
-    this.fio = fio;
-    this.email = email;
-    this.password = password;
-    this.dateOfBirth = dateOfBirth;
-    this.dateOFRegister=LocalDate.now();
-    this.isActive=1L;
+        this.fio = fio;
+        this.email = email;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOFRegister = LocalDate.now();
+        this.isActive = 1L;
     }
-
 
     public String getFio() {
         return fio;
@@ -78,7 +80,8 @@ private LocalDate  dateOfBirth;
     }
 
     public String getEmail() {
-        return email; }
+        return email;
+    }
 
     public void setEmail(String email) {
         this.email = email;

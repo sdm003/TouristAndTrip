@@ -10,18 +10,19 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "description",nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
-    @Column(name = "weight",nullable = false)
+    @Column(name = "weight", nullable = false)
     private Long weight;
-    @Column(name = "price",nullable = false)
+    @Column(name = "price", nullable = false)
     private Long price;
-    @Column(name = "volume",nullable = false)
+    @Column(name = "volume", nullable = false)
     private Long volume;
-    @Column(name="image")
+    @Column(name = "image")
     private String image;
+
     public String getImage() {
         return image;
     }

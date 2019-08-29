@@ -20,11 +20,11 @@ public class Trip {
     private String startPoint;
     private String endPoint;
     @ManyToOne
-    @JoinColumn(name="sender")
+    @JoinColumn(name = "sender")
     private Users delivery;
 
     @Column(name = "dateOfDisactivate", nullable = true)
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfDisactivate;
@@ -34,6 +34,7 @@ public class Trip {
     private Transport transport;
     private String status;
     private LocalDate dateOfCreation;
+
     public Transport getTransport() {
         return transport;
     }
@@ -43,20 +44,19 @@ public class Trip {
     }
 
     public Trip() {
-        this.dateOfCreation=LocalDate.now();
-        this.status="waiting";
+        this.dateOfCreation = LocalDate.now();
+        this.status = "waiting";
     }
 
-    public Trip(String startPoint, String endPoint,LocalDate dateOfDisactivate, String description, Transport transport) {
+    public Trip(String startPoint, String endPoint, LocalDate dateOfDisactivate, String description, Transport transport) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.dateOfDisactivate = dateOfDisactivate;
         this.description = description;
-        this.transport=transport;
-        this.status="pending";
-        this.dateOfCreation=LocalDate.now();
+        this.transport = transport;
+        this.status = "pending";
+        this.dateOfCreation = LocalDate.now();
     }
-
 
 
     public Long getId() {
@@ -108,14 +108,18 @@ public class Trip {
     }
 
     public String getStartPoint() {
-        return startPoint; }
+        return startPoint;
+    }
 
     public void setStartPoint(String startPoint) {
-        this.startPoint = startPoint; }
+        this.startPoint = startPoint;
+    }
 
     public String getEndPoint() {
-        return endPoint; }
+        return endPoint;
+    }
 
     public void setEndPoint(String endPoint) {
-        this.endPoint = endPoint; }
+        this.endPoint = endPoint;
+    }
 }

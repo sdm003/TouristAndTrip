@@ -18,45 +18,38 @@ public class TripController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping
-    @RequestMapping("/getAll")
+    @GetMapping("/getAll")
     public List<Trip> getAll() {
         return tripService.getAllCities();
     }
 
-    @PostMapping
-    @RequestMapping("/agreement/make")
+    @PostMapping("/agreement/make")
     public Message makeAgreementToOrder(@RequestHeader Long orderId, @RequestBody Long tripId) {
         return tripService.makeAgreement(orderId, tripId);
     }
 
-    @PutMapping
-    @RequestMapping("/agreement/accept")
+    @PutMapping("/agreement/accept")
     public Message acceptAgreement(@RequestHeader Long agreementId) {
         return tripService.acceptAgreement(agreementId);
     }
 
-    @PostMapping
-    @RequestMapping("/create")
+    @PostMapping("/create")
     public Message create(Principal principal, @RequestBody Trip trip) {
         System.out.println(trip.getDateOfDisactivate());
         return tripService.addTrip(trip, principal);
     }
 
-    @GetMapping
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public List<Trip> getAllByCities(@PathVariable Long id) {
         return tripService.getTripByCities(id);
     }
 
-    @DeleteMapping
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public Message deleteTrip(@PathVariable Long id) {
         return tripService.deleteTrip(id);
     }
 
-    @GetMapping
-    @RequestMapping("/orders/{id}")
+    @GetMapping("/orders/{id}")
     public List<Trip> getTripsByCities(@PathVariable Long id) {
         return tripService.getTripByCities(id);
     }

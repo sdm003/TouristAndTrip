@@ -26,13 +26,13 @@ public class Agreement {
     public Agreement(Orders orders, Trip trip) {
         this.orders = orders;
         this.trip = trip;
-        this.statusDelivery="pending";
-        this.statusOrder="pending";
+        this.statusDelivery = "pending";
+        this.statusOrder = "pending";
     }
 
     public Agreement() {
-        this.statusDelivery="pending";
-        this.statusOrder="pending";
+        this.statusDelivery = "pending";
+        this.statusOrder = "pending";
     }
 
     public Long getId() {

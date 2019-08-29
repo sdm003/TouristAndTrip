@@ -2,10 +2,13 @@ package com.example.TouristTrip.services;
 
 import com.example.TouristTrip.entity.Users;
 import com.example.TouristTrip.model.Message;
+import com.example.TouristTrip.model.UserPasswordReset;
 import com.example.TouristTrip.model.UserRequest;
 import com.example.TouristTrip.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,11 +26,13 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public Message addUser(Users users) {
@@ -105,17 +110,25 @@ public class UserServiceImpl implements UserService {
     public String authorization(String login, String password) {
         Users userLogin = userRepository.getUserByLogin(login);
         String passwordEncode = encoder.encode(password);
-        encoder.matches(password, userLogin.getPassword());
         if (userLogin == null) {
-            return "no login";
+            return "Couldn't find user with email " + login;
         } else if (encoder.matches(password, userLogin.getPassword())) {
             String originalInput = userLogin.getEmail() + ":" + password;
             String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-            return "Basic "+encodedString;
+            return "Basic " + encodedString;
         } else {
-            return passwordEncode;
+            return "Bad credentials";
         }
+    }
 
-
+    @Override
+    public ResponseEntity<String> resetPassword(UserPasswordReset userPasswordReset) {
+        Users users = userRepository.findByEmail(userPasswordReset.getEmail());
+        if (users == null)
+            return new ResponseEntity<>("Couldn't find user with email: " + userPasswordReset.getEmail(), HttpStatus.NOT_FOUND);
+        emailService.sendNewPasswordToEmail(userPasswordReset.getEmail(), userPasswordReset.getNewPassword());
+        users.setPassword(encoder.encode(userPasswordReset.getNewPassword()));
+        userRepository.save(users);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

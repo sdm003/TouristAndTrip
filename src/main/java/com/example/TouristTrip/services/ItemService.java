@@ -10,11 +10,13 @@ import java.util.List;
 
 public interface ItemService {
     Message addItem(Item item);
+
     Item findById(Long id);
+
     List<Item> getAllItems();
+
     String addImage(MultipartFile multipartFile) throws IOException;
-    Message updateImage(MultipartFile multipartFile,Long itemId) throws IOException;
 
-
+    Message updateImage(MultipartFile multipartFile, Long itemId) throws IOException;
 
 }

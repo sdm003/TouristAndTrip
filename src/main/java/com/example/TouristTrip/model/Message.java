@@ -4,9 +4,9 @@ public class Message {
     Object object;
     private String message;
 
-    public Message(String message,Object object) {
+    public Message(String message, Object object) {
         this.message = message;
-        this.object=object;
+        this.object = object;
     }
 
     public Message() {

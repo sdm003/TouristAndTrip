@@ -30,9 +30,9 @@ public class UserRequest {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfBirth;
 
-    public UserRequest(String login,String password) {
-        this.login=login;
-        this.password=password;
+    public UserRequest(String login, String password) {
+        this.login = login;
+        this.password = password;
 
     }
 

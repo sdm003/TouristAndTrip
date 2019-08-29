@@ -31,8 +31,10 @@ public class SecureConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/all").permitAll()
                 .antMatchers("/trip/getAll").permitAll()
                 .antMatchers("/orders/getAll").permitAll()
-                .antMatchers("/api/authorization").permitAll().and()
-                .authorizeRequests().anyRequest().permitAll().and().logout();
+                .antMatchers("/api/authorization").permitAll()
+                .antMatchers("/swagger-ui.html/**").permitAll()
+                .and()
+                .authorizeRequests().anyRequest().authenticated().and().logout();
 
     }
 

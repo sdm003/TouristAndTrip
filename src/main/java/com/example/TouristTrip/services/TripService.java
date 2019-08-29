@@ -10,11 +10,18 @@ import java.util.List;
 
 public interface TripService {
     Message addTrip(Trip trip, Principal principal);
+
     Message deleteTrip(Long tripId);
+
     Trip getTripById(Long tripId);
+
     List<Trip> getTripByCities(Long id);
-    List<Trip>getAllCities();
-    Message makeAgreement(Long tripId,Long orderId);
+
+    List<Trip> getAllCities();
+
+    Message makeAgreement(Long tripId, Long orderId);
+
     Message acceptAgreement(Long agreementId);
+
     List<Agreement> getAgreementsByDelivery(Principal principal);
 }

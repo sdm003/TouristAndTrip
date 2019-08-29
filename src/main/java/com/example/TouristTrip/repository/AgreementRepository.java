@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-public interface AgreementRepository extends JpaRepository<Agreement,Long> {
+public interface AgreementRepository extends JpaRepository<Agreement, Long> {
     @Query("select g from Agreement g \n" +
             "    join fetch g.orders t\n" +
             "    join fetch t.sender p where p.email=:email")

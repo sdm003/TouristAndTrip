@@ -9,12 +9,19 @@ import java.util.List;
 
 public interface OrderService {
     Message addOrder(Orders orders, Principal principal);
+
     Message deleteOrder(Long orderId);
+
     List<Orders> getOrdersByCities(Long id);
-    List<Orders>getAllOrders();
+
+    List<Orders> getAllOrders();
+
     Orders getOrderBYId(Long id);
-    Message makeAgreement(Long orderId,Long tripId);
+
+    Message makeAgreement(Long orderId, Long tripId);
+
     Message acceptAgreement(Long agreementId);
+
     List<Agreement> getAgreementsBySender(Principal principal);
 
 }
