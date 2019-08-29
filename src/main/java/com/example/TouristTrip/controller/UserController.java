@@ -25,13 +25,12 @@ public class UserController {
         return userService.addUser(users);
     }
 
-    @PutMapping
-    @RequestMapping("/update_user")
+    @PutMapping("/update_user")
     public Message updateUsers(@RequestBody UserRequest userRequest, Principal principal) {
         return userService.updateUser(principal, userRequest);
     }
 
-    @GetMapping("/all")
+    @GetMapping(("/all"))
     public List<Users> getAllUsers() {
         return userService.findAllUsers();
     }

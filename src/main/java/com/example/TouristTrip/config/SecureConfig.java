@@ -27,14 +27,13 @@ public class SecureConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .httpBasic().and()
                 .authorizeRequests()
-                .antMatchers("/api/registration").permitAll()
+                .antMatchers("/api/user/registration").permitAll()
                 .antMatchers("/api/all").permitAll()
                 .antMatchers("/trip/getAll").permitAll()
                 .antMatchers("/orders/getAll").permitAll()
-                .antMatchers("/api/authorization").permitAll()
+                .antMatchers("/api/user/authorization").permitAll()
                 .antMatchers("/swagger-ui.html/**").permitAll()
-                .and()
-                .authorizeRequests().anyRequest().authenticated().and().logout();
+                .anyRequest().authenticated().and().logout();
 
     }
 
