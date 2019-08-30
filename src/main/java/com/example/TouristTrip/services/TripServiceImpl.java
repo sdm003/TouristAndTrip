@@ -9,6 +9,7 @@ import com.example.TouristTrip.repository.AgreementRepository;
 import com.example.TouristTrip.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Order;
 import java.security.Principal;
@@ -17,15 +18,16 @@ import java.util.List;
 @Service
 public class TripServiceImpl implements TripService {
     @Autowired
-    TripRepository tripRepository;
+    private TripRepository tripRepository;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    AgreementRepository agreementRepository;
+    private AgreementRepository agreementRepository;
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @Override
+    @Transactional
     public Message addTrip(Trip trip, Principal principal) {
         Users users = userService.getUserByLogin(principal.getName());
         trip.setDelivery(users);
@@ -34,6 +36,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
+    @Transactional
     public Message acceptAgreement(Long agreementId) {
         Agreement agreement = agreementRepository.findById(agreementId).get();
         agreement.setStatusDelivery("ready");
@@ -41,6 +44,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
+    @Transactional
     public Message makeAgreement(Long tripId, Long orderId) {
         Trip trip = tripRepository.findById(tripId).get();
         Agreement agreement = new Agreement();
@@ -54,11 +58,13 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Trip getTripById(Long tripId) {
         return tripRepository.findById(tripId).get();
     }
 
     @Override
+    @Transactional
     public Message deleteTrip(Long tripId) {
         Trip trip = tripRepository.findById(tripId).get();
         tripRepository.delete(trip);
@@ -66,6 +72,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Agreement> getAgreementsByDelivery(Principal principal) {
         String login = principal.getName();
         agreementRepository.getAgreementsByDelivery(login);
@@ -73,12 +80,14 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Trip> getTripByCities(Long id) {
         Orders order = orderService.getOrderBYId(id);
         return tripRepository.getItemsByCities(order.getStartPoint(), order.getEndPoint());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Trip> getAllCities() {
         return tripRepository.findAll();
     }

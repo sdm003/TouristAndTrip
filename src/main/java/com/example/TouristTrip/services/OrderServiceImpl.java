@@ -7,6 +7,7 @@ import com.example.TouristTrip.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
@@ -14,17 +15,18 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    ItemService itemService;
+    private ItemService itemService;
     @Autowired
-    AgreementRepository agreementRepository;
+    private AgreementRepository agreementRepository;
     @Autowired
-    TripService tripService;
+    private TripService tripService;
 
     @Override
+    @Transactional
     public Message addOrder(Orders orders, Principal principal) {
         Users users = userService.getUserByLogin(principal.getName());
         orders.setSender(users);
@@ -36,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
+    @Transactional
     public Message makeAgreement(Long orderId, Long tripId) {
         Orders order = orderRepository.findById(orderId).get();
         Agreement agreement = new Agreement();
@@ -49,14 +52,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Agreement> getAgreementsBySender(Principal principal) {
         principal.getName();
-
         return agreementRepository.getAgreementsBySender(principal.getName());
 
     }
 
     @Override
+    @Transactional
     public Message acceptAgreement(Long agreementId) {
         Agreement agreement = agreementRepository.findById(agreementId).get();
         agreement.setStatusOrder("ready");
@@ -64,23 +68,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Orders getOrderBYId(Long id) {
         return orderRepository.findById(id).get();
     }
 
     @Override
+    @Transactional
     public Message deleteOrder(Long orderId) {
         Orders orders = orderRepository.findById(orderId).get();
         return new Message("orders has been deleted", orders);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Orders> getOrdersByCities(Long id) {
         Trip trip = tripService.getTripById(id);
         return orderRepository.getOrderssByCities(trip.getStartPoint(), trip.getEndPoint());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Orders> getAllOrders() {
         return orderRepository.findAll();
     }

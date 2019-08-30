@@ -15,9 +15,9 @@ import java.util.List;
 @RequestMapping("api/orders")
 public class OrderController {
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     @Autowired
-    TripService tripService;
+    private TripService tripService;
 
     @GetMapping("/getAll")
     public List<Orders> getAll() {
@@ -39,7 +39,7 @@ public class OrderController {
         return orderService.acceptAgreement(agreementId);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public List<Orders> getAllByCities(@PathVariable Long id) {
         return orderService.getOrdersByCities(id);
     }

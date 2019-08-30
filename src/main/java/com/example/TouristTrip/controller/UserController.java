@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("api/user")
 public class UserController {
     @Autowired
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     @PostMapping("/registration")
     public Message registration(@RequestBody Users users) {
