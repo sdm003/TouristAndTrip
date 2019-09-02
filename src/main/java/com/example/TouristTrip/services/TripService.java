@@ -1,6 +1,7 @@
 package com.example.TouristTrip.services;
 
 import com.example.TouristTrip.entity.Agreement;
+import com.example.TouristTrip.entity.Mark;
 import com.example.TouristTrip.entity.Trip;
 import com.example.TouristTrip.model.Message;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +23,10 @@ public interface TripService {
     Message makeAgreement(Long tripId, Long orderId);
 
     Message acceptAgreement(Long agreementId);
+
+    Message rateAgreement(Long agreementId,Principal principal, Mark mark);
+
+    Message makeAgreementFinished(Long agreementId, Principal principal);
 
     List<Agreement> getAgreementsByDelivery(Principal principal);
 }

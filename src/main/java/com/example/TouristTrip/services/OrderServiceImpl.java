@@ -49,11 +49,42 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Message makeAgreementFinished(Long agreementId,Principal principal) {
+        Agreement agreement = agreementRepository.findById(agreementId).get();
+        Users users= userService.getUserByLogin(principal.getName());
+        if(agreement.getOrders().getSender()==users){
+            agreement.setStatusOrder("FINISHED");
+            agreementRepository.save(agreement);
+            return new Message("FINISHED",agreement);
+        }
+        return new Message("This is not your agreement",null);
+    }
+
+
+    @Override
     public List<Agreement> getAgreementsBySender(Principal principal) {
         principal.getName();
 
         return agreementRepository.getAgreementsBySender(principal.getName());
 
+    }
+
+    @Override
+    public List<Agreement> getAgreementByDelivery(Principal principal) {
+        String name = principal.getName();
+        return agreementRepository.getAgreementsByDelivery(name);
+    }
+
+    @Override
+    public Message rateAgreement(Long agreementId, Principal principal, Mark mark) {
+        Agreement agreement = agreementRepository.findById(agreementId).get();
+        Users users= userService.getUserByLogin(principal.getName());
+        if(agreement.getOrders().getSender()==users && agreement.getStatusOrder().equals("FINISHED")){
+            agreement.setSender(mark);
+            agreementRepository.save(agreement);
+            return new Message("Thank you for your rate!",mark);
+        }
+        return new Message("This is not your agreement",null);
     }
 
     @Override

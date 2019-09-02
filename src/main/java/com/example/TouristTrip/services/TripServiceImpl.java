@@ -1,9 +1,6 @@
 package com.example.TouristTrip.services;
 
-import com.example.TouristTrip.entity.Agreement;
-import com.example.TouristTrip.entity.Orders;
-import com.example.TouristTrip.entity.Trip;
-import com.example.TouristTrip.entity.Users;
+import com.example.TouristTrip.entity.*;
 import com.example.TouristTrip.model.Message;
 import com.example.TouristTrip.repository.AgreementRepository;
 import com.example.TouristTrip.repository.TripRepository;
@@ -38,6 +35,32 @@ public class TripServiceImpl implements TripService {
         Agreement agreement = agreementRepository.findById(agreementId).get();
         agreement.setStatusDelivery("ready");
         return new Message("Agreement has been updated", agreement);
+    }
+
+    @Override
+    public Message rateAgreement(Long agreementId, Principal principal, Mark mark) {
+        Agreement agreement = agreementRepository.findById(agreementId).get();
+        Users users= userService.getUserByLogin(principal.getName());
+        if(agreement.getTrip().getDelivery()==users && agreement.getStatusDelivery().equals("FINISHED")){
+            agreement.setDelivery(mark);
+            agreementRepository.save(agreement);
+            return new Message("Tank you for your rate!",mark);
+        }
+        return new Message("This is not your agreement",null);
+    }
+
+    @Override
+    public Message makeAgreementFinished(Long agreementId,Principal principal) {
+       Agreement agreement = agreementRepository.findById(agreementId).get();
+       Users users= userService.getUserByLogin(principal.getName());
+       if(agreement.getTrip().getDelivery()==users){
+           agreement.setStatusDelivery("FINISHED");
+           agreementRepository.save(agreement);
+           return new Message("FINISHED",agreement);
+
+       }
+
+        return new Message("This is not your agreement",null);
     }
 
     @Override

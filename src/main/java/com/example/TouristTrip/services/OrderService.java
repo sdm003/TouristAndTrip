@@ -1,6 +1,7 @@
 package com.example.TouristTrip.services;
 
 import com.example.TouristTrip.entity.Agreement;
+import com.example.TouristTrip.entity.Mark;
 import com.example.TouristTrip.entity.Orders;
 import com.example.TouristTrip.model.Message;
 
@@ -20,8 +21,15 @@ public interface OrderService {
 
     Message makeAgreement(Long orderId, Long tripId);
 
+
+
     Message acceptAgreement(Long agreementId);
 
+    Message makeAgreementFinished(Long agreementId,Principal principal);
+
+    Message rateAgreement(Long agreementId, Principal principal, Mark mark);
+
     List<Agreement> getAgreementsBySender(Principal principal);
+    List<Agreement>getAgreementByDelivery(Principal principal);
 
 }
