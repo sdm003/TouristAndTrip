@@ -14,9 +14,9 @@ import java.util.List;
 @RequestMapping("api/trip")
 public class TripController {
     @Autowired
-    TripService tripService;
+    private TripService tripService;
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @GetMapping("/getAll")
     public List<Trip> getAll() {

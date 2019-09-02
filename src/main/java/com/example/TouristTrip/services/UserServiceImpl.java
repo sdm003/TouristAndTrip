@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.beans.Encoder;
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private EmailService emailService;
 
     @Override
+    @Transactional
     public Message addUser(Users users) {
         List<Users> all = userService.findAllUsers();
         if (all.contains(users)) {
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public String addImage(MultipartFile file) throws IOException {
         byte[] bytes = file.getBytes();
         String modifiedFileName = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().length() - 4);
@@ -59,6 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Message updateImage(MultipartFile file, Principal principal) throws IOException {
         Users users = userService.getUserByLogin(principal.getName());
 
@@ -68,16 +72,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Users findUserById(Long id) {
         return userRepository.findById(id).get();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Users> findAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Message updateUser(Principal principal, UserRequest userRequest) {
         String login = principal.getName();
         Users users = userService.getUserByLogin(login);
@@ -97,11 +104,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Users getUserByPassword(String password) {
         return userRepository.getUserByPassword(password);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Users getUserByLogin(String login) {
         return userRepository.getUserByLogin(login);
     }
@@ -122,6 +131,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<String> resetPassword(UserPasswordReset userPasswordReset) {
         Users users = userRepository.findByEmail(userPasswordReset.getEmail());
         if (users == null)

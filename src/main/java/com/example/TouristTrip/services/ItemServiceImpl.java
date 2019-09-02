@@ -5,28 +5,25 @@ import com.example.TouristTrip.model.Message;
 import com.example.TouristTrip.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Principal;
 import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
-
     @Autowired
-    ItemRepository itemRepository;
-
+    private ItemRepository itemRepository;
     @Autowired
-    ItemService itemService;
-
+    private ItemService itemService;
     @Autowired
-    UserService userService;
-
+    private UserService userService;
     @Override
+    @Transactional
     public Message addItem(Item item) {
         itemRepository.save(item);
         return new Message("Item successfully added", item);
@@ -34,12 +31,14 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Item findById(Long id) {
         return itemRepository.findById(id).get();
     }
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
